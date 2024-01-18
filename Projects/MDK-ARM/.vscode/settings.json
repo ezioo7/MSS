@@ -30,6 +30,16 @@
         "pwm.h": "c",
         "systemsafety.h": "c",
         "globale.h": "c",
-        "stdint.h": "c"
+        "stdint.h": "c",
+        "spi.h": "c",
+        "flash.h": "c",
+        "w25q64.h": "c",
+        "pwmsoft.h": "c",
+        "config.h": "c",
+        "stdlib.h": "c",
+        "string": "c",
+        "mbframe.h": "c",
+        "mbproto.h": "c",
+        "mbconfig.h": "c"
     }
 }

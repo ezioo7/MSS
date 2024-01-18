@@ -419,11 +419,6 @@
               <FilePath>..\..\User\dataCollect.c</FilePath>
             </File>
             <File>
-              <FileName>pwm.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\User\pwm.c</FilePath>
-            </File>
-            <File>
               <FileName>control.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\User\control.c</FilePath>
@@ -437,6 +432,21 @@
               <FileName>SystemSafety.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\User\SystemSafety.c</FilePath>
+            </File>
+            <File>
+              <FileName>config.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\User\config.c</FilePath>
+            </File>
+            <File>
+              <FileName>pwm3TIM.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\User\pwm3TIM.c</FilePath>
+            </File>
+            <File>
+              <FileName>pwmSoft.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\User\pwmSoft.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -494,9 +504,19 @@
               <FilePath>..\..\User\include\led.h</FilePath>
             </File>
             <File>
-              <FileName>pwm.h</FileName>
+              <FileName>config.h</FileName>
               <FileType>5</FileType>
-              <FilePath>..\..\User\include\pwm.h</FilePath>
+              <FilePath>..\..\User\include\config.h</FilePath>
+            </File>
+            <File>
+              <FileName>pwm3TIM.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\User\include\pwm3TIM.h</FilePath>
+            </File>
+            <File>
+              <FileName>pwmSoft.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\User\include\pwmSoft.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -588,6 +608,21 @@
               <FileType>1</FileType>
               <FilePath>..\..\Drivers\STM32F1xx_HAL_Driver\Src\stm32f1xx_hal_tim_ex.c</FilePath>
             </File>
+            <File>
+              <FileName>stm32f1xx_hal_flash.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Drivers\STM32F1xx_HAL_Driver\Src\stm32f1xx_hal_flash.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f1xx_hal_flash_ex.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Drivers\STM32F1xx_HAL_Driver\Src\stm32f1xx_hal_flash_ex.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f1xx_hal_spi.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Drivers\STM32F1xx_HAL_Driver\Src\stm32f1xx_hal_spi.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -632,6 +667,36 @@
               <FileName>uart.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\..\Drivers\BSP\UART\uart.h</FilePath>
+            </File>
+            <File>
+              <FileName>spi.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Drivers\BSP\SPI\spi.c</FilePath>
+            </File>
+            <File>
+              <FileName>spi.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\Drivers\BSP\SPI\spi.h</FilePath>
+            </File>
+            <File>
+              <FileName>flash.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Drivers\BSP\FLASH\INTERNAL\flash.c</FilePath>
+            </File>
+            <File>
+              <FileName>flash.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\Drivers\BSP\FLASH\INTERNAL\flash.h</FilePath>
+            </File>
+            <File>
+              <FileName>w25q64.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Drivers\BSP\FLASH\W25Q64\w25q64.c</FilePath>
+            </File>
+            <File>
+              <FileName>w25q64.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\Drivers\BSP\FLASH\W25Q64\w25q64.h</FilePath>
             </File>
           </Files>
         </Group>

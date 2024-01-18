@@ -210,7 +210,7 @@
         }
     }
 /*-----------------------------------------------------------*/
-
+    /* 关中断关键代码 */
     static portFORCE_INLINE uint32_t ulPortRaiseBASEPRI( void )
     {
         uint32_t ulReturn, ulNewBASEPRI = configMAX_SYSCALL_INTERRUPT_PRIORITY;

@@ -14,8 +14,8 @@
  *
  ****************************************************************************************************
  */
-#ifndef __MSS_GLOBALE_H
-#define __MSS_GLOBALE_H
+#ifndef __MSS_GlobalE_H
+#define __MSS_GlobalE_H
 
 /******************************************************************************/
 /*                              ¹«¹²ºê¶¨Òå                                     */
@@ -26,16 +26,17 @@
 #define TRUE 1
 #define FALSE 0
 
-typedef unsigned int        uint32_t;
-typedef int                 int32_t;
-typedef unsigned short int  uint16_t;
-typedef unsigned char       uint8_t;
+typedef unsigned int uint32_t;
+typedef int int32_t;
+typedef unsigned short int uint16_t;
+typedef unsigned char uint8_t;
 
 /******************************************************************************/
 /*                               ²É¼¯ĞÅÏ¢                                      */
 /******************************************************************************/
 extern float CI_DesireVoltage;   /* ½ÓÊÕÓÃ»§ÊäÈëÆÚÍûÏàµçÑ¹±äÁ¿ */
 extern float SV_DesireVoltage;   /* ÆÚÍûÏàµçÑ¹±äÁ¿£¬ÏµÍ³±äÁ¿ */
+extern float CF_RatedPhI;        /* µç»úµÄ¶î¶¨µçÁ÷,32Î»ÓĞĞ§,µ¥Î»A,¾«¶È0.01A */
 extern float AM_OutUO_Voltage;   /* Ö±½Ó²É¼¯, Êä³öUÏàµçÑ¹Æ½¾ùÖµ, PB1, ADC9 */
 extern float AM_OutVO_Voltage;   /* Ö±½Ó²É¼¯, Êä³öVÏàµçÑ¹Æ½¾ùÖµ, PB0, ADC8 */
 extern float AM_OutWO_Voltage;   /* Ö±½Ó²É¼¯, Êä³öWÏàµçÑ¹Æ½¾ùÖµ, PC5, ADC15 */
@@ -45,6 +46,9 @@ extern float AM_OutWV_Voltage;   /* ¼ä½Ó¼ÆËã, Êä³öWVÏà¼äµçÑ¹Æ½¾ùÖµ */
 extern float AM_OutU_PhaseI;     /* Ö±½Ó²É¼¯, Êä³öUÏàµçÁ÷Æ½¾ùÖµ, PA7, ADC7 */
 extern float AM_OutV_PhaseI;     /* Ö±½Ó²É¼¯, Êä³öVÏàµçÁ÷Æ½¾ùÖµ, PA6, ADC6 */
 extern float AM_OutW_PhaseI;     /* Ö±½Ó²É¼¯, Êä³öWÏàµçÁ÷Æ½¾ùÖµ, PC4, ADC14 */
+extern float AM_EffectiveU_I;    /* ¼ä½Ó¼ÆËã, ÉÏÒ»ÖÜÆÚUÏàµçÁ÷ÓĞĞ§Öµ, µ¥Î»A */
+extern float AM_EffectiveV_I;    /* ¼ä½Ó¼ÆËã, ÉÏÒ»ÖÜÆÚVÏàµçÁ÷ÓĞĞ§Öµ, µ¥Î»A */
+extern float AM_EffectiveW_I;    /* ¼ä½Ó¼ÆËã, ÉÏÒ»ÖÜÆÚWÏàµçÁ÷ÓĞĞ§Öµ, µ¥Î»A */
 extern float SV_FAN_OutU_PhaseI; /* Ö±½Ó²É¼¯, 7.5KW·çÉÈµçÁ÷, UÂ·, PA5, ADC5 */
 extern float SV_FAN_OutV_PhaseI; /* Ö±½Ó²É¼¯, 7.5KW·çÉÈµçÁ÷, VÂ·, PA4, ADC4 */
 extern float AM_Pressure_A;      /* Ö±½Ó²É¼¯, À©Õ¹¿¨Ñ¹Á¦´«¸ĞÆ÷AI2, PA1, ADC1 */
@@ -74,6 +78,7 @@ extern uint16_t CI_Command;  /*ÓÃ»§Íâ²¿ÊäÈëÃüÁî*/
 /*                      safetyÏµÍ³°²È«Ïà¹Ø±äÁ¿ºÍºê¶¨Òå                          */
 /******************************************************************************/
 extern uint16_t CF_OverPhI_Config; /*ÏµÍ³¹ıÔØ·´Ê±ÏŞÉè¶¨*/
+#define CF_OVERPHI_FACTOR 1.2      /* ¹ıÔØ·´Ê±ÏŞÏµÊı */
 #define OVERPHI_L0 0               /*0-±íÊ¾ÎŞ·´Ê±ÏŞÉè¶¨*/
 #define OVERPHI_L1 1               /*1-±íÊ¾ÆôÓÃ1¼¶ÎŞ·´Ê±ÏŞÉè¶¨£¬1.05±¶¶î¶¨µçÁ÷·´Ê±ÏŞ±£»¤*/
 #define OVERPHI_L2 2               /*2-±íÊ¾ÆôÓÃ2¼¶ÎŞ·´Ê±ÏŞÉè¶¨£¬1.2±¶¶î¶¨µçÁ÷·´Ê±ÏŞ±£»¤*/
@@ -115,7 +120,21 @@ extern uint16_t g_adc1_buffer[3 * CF_ADC_CH_NUM]; /* ADC1²É¼¯µÄ»º´æBuffer, ADC1²
 /******************************************************************************/
 /*                                 PWM·¢²¨                                    */
 /******************************************************************************/
-#define CF_START_ANGLE 150              /* ³õÊ¼µÄµ¼Í¨½Ç, ¿ÉÉèÖÃÎª 0 - 150 */
+#define CF_START_ANGLE 150     /* ³õÊ¼µÄµ¼Í¨½Ç, µ¥Î»Îª¶È */
+#define CI_START_MODE 0        /* ÓÃ»§ÅäÖÃÈíÆô¶¯Ä£Ê½,0=µçÑ¹¿ØÖÆ,1=ÏŞÁ÷Æô¶¯,2=×ª¾ØÆô¶¯ */
+#define CI_START_TIME 20       /* ÓÃ»§ÅäÖÃÆô¶¯Ê±¼ä,µ¥Î»ÎªÃë */
+#define CI_MAX_START_I 10      /* ÏŞÁ÷¿ØÖÆÆô¶¯, ÓÃ»§ÅäÖÃ×î´óÆô¶¯µçÁ÷, µ¥Î»Îª°²Åà */
+#define CF_ERROR_MAX_SCALE 0.2 /* µçÁ÷¿ØÖÆÆô¶¯Ê±PIËã·¨ÔÊĞíµÄµ¥´Î×î´óERRORµÄ±ÈÀıÏµÊı, µ¥´Î×î´óERROR = CF_MAX_ERROR_SCALE * (PIËã·¨³õÊ¼Öµ-Ä¿±êÖµ) */
+
+#define CF_PWM_USE_3TIM /* ¿ÉÑ¡ CF_PWM_USE_3TIM ºÍ CF_PWM_USE_SOFT, ¶ÔÓ¦Á½ÖÖ²»Í¬µÄPWMµ×²ãÊµÏÖ */
+/* PWMÊµÏÖ·½Ê½1, Ê¹ÓÃ3¸ö¶¨Ê±Æ÷ºÍ²¿·ÖÈí¼şÊµÏÖ */
+#define CF_TIM_PWM_PHASE_A MSS_TIM3
+#define CF_TIM_PWM_PHASE_A_HANDLE g_tim3_handle
+#define CF_TIM_PWM_PULLUP MSS_TIM4
+#define CF_TIM_PWM_PULLUP_HANDLE g_tim4_handle
+#define CF_TIM_PWM_PULLDOWN MSS_TIM5
+#define CF_TIM_PWM_PULLDOWN_HANDLE g_tim5_handle
+/* PWMÊµÏÖ·½Ê½2, Ê¹ÓÃ1¸ö¶¨Ê±Æ÷µÄÒç³öÊÂ¼ş×÷ÎªÊ±»ù, ´¿Èí¼şÊµÏÖ */
 #define CF_TIM_PWM MSS_TIM6             /* PWM·¢²¨Ê¹ÓÃµÄ¶¨Ê±Æ÷ */
 #define CF_TIM_PWM_HANDLE g_tim6_handle /* PWM·¢²¨Ê¹ÓÃµÄ¶¨Ê±Æ÷¾ä±ú */
 
@@ -125,8 +144,7 @@ extern uint16_t g_adc1_buffer[3 * CF_ADC_CH_NUM]; /* ADC1²É¼¯µÄ»º´æBuffer, ADC1²
 /* ĞŞ¸ÄÕâÁ½¸ö¾Í¿ÉÒÔ×Ô¶¯ĞŞ¸ÄprintfÖØ¶¨ÏòÊ¹ÓÃµÄ´®¿Ú, ×¢Òâ¶şÕßÒªÒ»ÖÂ */
 #define CF_USART_PRINTF USART1                /* Ö¸¶¨ÖØ¶¨Ïòprintfº¯ÊıËùÊ¹ÓÃµÄ´®¿Ú */
 #define CF_USART_PRINTF_HANDLE g_uart1_handle /* Ö¸¶¨printfÖØ¶¨ÏòÊ¹ÓÃµÄ´®¿Ú¾ä±ú */
-/* printfÖØ¶¨ÏòÊ¹ÓÃµÄ»º³åÊı×é´óĞ¡, ²»Òª³¬¹ı256 */
-#define CF_PRINTF_BUFFER_SIZE 128
+#define CF_PRINTF_BUFFER_SIZE 256             /* printfÖØ¶¨ÏòÊ¹ÓÃµÄ»º³åÊı×é´óĞ¡, ²»Òª³¬¹ı256 */
 
 /******************************************************************************/
 /*                               ModbusÅäÖÃ                                   */
@@ -139,12 +157,110 @@ extern uint16_t g_adc1_buffer[3 * CF_ADC_CH_NUM]; /* ADC1²É¼¯µÄ»º´æBuffer, ADC1²
 #define CF_TIM_MB_HANDLE g_tim7_handle /* FreeModbusÊ¹ÓÃµÄ¶¨Ê±Æ÷¾ä±ú */
 
 /******************************************************************************/
-/*                              ÖĞ¶ÏÓÅÏÈ¼¶ÅäÖÃ                                 */
-/* ×¢ÒâÏÖÔÚÒÑ¾­±»Ê¹ÓÃµÄEXTIÓĞ: EXTI3-PD3, EXTI4-PD4, EXTI5-PD5                  */
+/*                                  SPIÅäÖÃ                                   */
 /******************************************************************************/
+#define CF_SPI1_USE_REMAP 0                /* Ö¸¶¨SPI1Ê¹ÓÃµÄÒı½Å×é, 1 = Ê¹ÓÃÖØÓ³ÉäÒı½Å, 0 = Ê¹ÓÃÄ¬ÈÏ¸´ÓÃÒı½Å */
+#define CF_W25Q64_SPI SPI1                 /* Ö¸¶¨²Ù×÷Íâ²¿FLASH-w25q64Ê¹ÓÃµÄSPI */
+#define CF_W25Q64_SPI_HANDLE g_spi1_handle /* Ö¸¶¨²Ù×÷Íâ²¿FLASH-w25q64Ê¹ÓÃµÄSPI¾ä±ú */
+
+/******************************************************************************/
+/*                                  W25Q64ÅäÖÃ                                 */
+/******************************************************************************/
+#define CF_W25Q64_CS_GPIO GPIOA     /* Ö¸¶¨²Ù×÷W25Q64µÄÆ¬Ñ¡GPIO */
+#define CF_W25Q64_CS_PIN GPIO_PIN_4 /* Ö¸¶¨²Ù×÷W25Q64µÄÆ¬Ñ¡Òı½Å */
+
+/******************************************************************************/
+/*                                  ²ÎÊı¹Ì»¯ÅäÖÃ                               */
+/******************************************************************************/
+/* NOTE:²»Í¬¹Ì»¯ÊµÏÖ²ßÂÔ¶¼²ÉÓÃ´óĞ¡Îª 4KBµÄÁ¬ĞøÇøÓò´æ´¢²ÎÊı, ÆğÊ¼µØÖ·ÎªCF_PERSIST_BASE_XXX */
+#define CF_PERSIST_BASE_INTERNAL 0x0807F000U /* ÄÚ²¿FLash´æ´¢³Ö¾Ã²ÎÊıµÄ¿ªÊ¼µØÖ· */
+#define CF_PERSIST_BASE_W25Q64 0x00000000U   /* W25Q64´æ´¢³Ö¾Ã²ÎÊıµÄ¿ªÊ¼µØÖ· */
+// #define CF_PERSIST_USE_INTERNAL              /* ¿ÉÑ¡ CF_PERSIST_USE_INTERNAL ºÍ CF_PERSIST_USE_W25Q64, ¶ÔÓ¦Á½ÖÖ²»Í¬µÄ²ÎÊı¹Ì»¯ÊµÏÖ·½Ê½ */
+
+/******************************************************************************/
+/*                              ÖĞ¶ÏÓÅÏÈ¼¶ÅäÖÃ                                 */
+/******************************************************************************/
+/* ×¢ÒâÏÖÔÚÒÑ¾­±»Ê¹ÓÃµÄEXTIÓĞ: */
+/* EXTI3-PD3, EXTI4-PD4, EXTI5-PD5, µ¼Í¨·´À¡ */
+/* EXTI0-PD0, EXTI1-PD1, EXTI2-PD2, µçÑ¹Õı°ëÖá·´À¡ */
 /* ÓÅÏÈ¼¶¿ÉÅäÖÃ0 - 15, ×¢ÒâÖ»ÓĞÓÅÏÈ¼¶ 5 - 15 µÄÓÉFreeRTOS¹ÜÀí */
 #define CF_PWM_TIM_PRIORITY 0                 /* PWM·¢²¨Ê¹ÓÃµÄ¶¨Ê±Æ÷µÄÖĞ¶ÏÓÅÏÈ¼¶, Ö±½ÓÓ°Ïìµ½·¢²¨µÄ¾«¶È */
 #define CF_HIGHLEVEL_DATATRANS_TIM_PRIORITY 1 /* ¸ßÊµÊ±ĞÔÊı¾İ´¦ÀíËùÓÃ¶¨Ê±Æ÷µÄÖĞ¶ÏÓÅÏÈ¼¶, Ö±½ÓÓ°Ïìµ½Êı¾İ²É¼¯µÄÆµÂÊ */
 #define CF_PWM_FEEDBACK_IT_PRIORITY 2         /* ¾§Õ¢¹Üµ¼Í¨½Ç·´À¡µÄIO¿ÚµÄÖĞ¶Ï*/
+#define CF_Voltage_Feedback_IT_Priority 2     /* µçÑ¹Õı°ëÖá×ª·½²¨·´À¡ */
+#define CF_PRINTF_IT_PRIORITY 5               /* printfÖØ¶¨Ïòµ½uart, ²ÉÓÃÖĞ¶Ï·½Ê½·¢ËÍ */
+#define CF_MB_UART_IT_PRIORITY 3              /* FreeModbusµ×²ãÊ¹ÓÃ´®¿ÚÍ¨ĞÅ, ´®¿Ú²ÉÓÃÖĞ¶Ï·½Ê½·¢ËÍºÍ½ÓÊÕ, ÅäÖÃ´®¿ÚÖĞ¶ÏÓÅÏÈ¼¶ */
+
+/**
+ * @brief   »ù±¾²ÎÊı
+ */
+typedef struct __MSS_Base_Config
+{
+    float Power_Voltage;      /* µçÔ´µçÑ¹, µ¥Î»·üÌØ */
+    uint32_t Power_Frequency; /* µçÔ´ÆµÂÊ, µ¥Î»HZ */
+    float Power_Factor;       /* ¸ºÔØ¹¦ÂÊÒòÊı, µ¥Î»½Ç¶È */
+
+} MSS_Base_Config;
+
+/**
+ * @brief   ÈíÆô¶¯²ÎÊı
+ */
+typedef struct __MSS_Soft_Start_Config
+{
+    uint32_t Start_Period; /* Æô¶¯Ê±¼ä, µ¥Î»Ãë */
+    uint8_t Start_Mode;    /* Æô¶¯Ä£Ê½, 0 = µçÑ¹¿ØÖÆ, 1 = µçÁ÷¿ØÖÆ, 2 = ×ª¾Ø¿ØÖÆÆô¶¯ */
+} MSS_Soft_Start_Config;
+
+/**
+ * @brief   ±£»¤Ä£¿é²ÎÊı
+ */
+typedef struct __MSS_Protect_Config
+{
+    uint32_t Power_Voltage;
+    uint32_t Power_Frequency;
+} MSS_Protect_Config;
+
+/**
+ * @brief   Í¨ĞÅ²ÎÊı
+ */
+typedef struct __MSS_Comm_Config
+{
+    uint32_t Power_Voltage;
+    uint32_t Power_Frequency;
+} MSS_Comm_Config;
+
+/**
+ * @brief   ÓÃ»§½çÃæ²ÎÊı
+ */
+typedef struct __MSS_User_Config
+{
+    uint32_t Power_Voltage;
+    uint32_t Power_Frequency;
+} MSS_User_Config;
+
+/**
+ * @brief   ¹ÊÕÏ¼ÇÂ¼²ÎÊı
+ */
+typedef struct __MSS_Log_Config
+{
+    uint8_t log_level; /* ÈÕÖ¾¼ÇÂ¼¼¶±ğ */
+    uint32_t Power_Frequency;
+} MSS_Log_Config;
+
+typedef struct __MSS_Config
+{
+    MSS_Base_Config Base_Config;
+    MSS_Soft_Start_Config Soft_Start_Config;
+    MSS_Protect_Config Protect_Config;
+    MSS_Comm_Config Comm_Config;
+    MSS_User_Config User_Config;
+    MSS_Log_Config Log_Config;
+} MSS_Config;
+extern MSS_Config *mss_Config;
+
+/* ¹¤¾ßº¯Êı, ´òÓ¡Êı×é */
+void print_arr8(uint8_t *arr, uint16_t len);
+void print_arr16(uint16_t *arr, uint16_t len);
+void print_arr32(uint32_t *arr, uint16_t len);
 
 #endif

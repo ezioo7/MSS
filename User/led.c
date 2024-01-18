@@ -18,7 +18,6 @@
 
 void led0_task(void *pvParameters)
 {
-    led0_config();
     while (1)
     {
         vTaskDelay(500);

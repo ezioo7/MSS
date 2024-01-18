@@ -48,6 +48,9 @@ extern MSS_TIM mss_tim[8];
 #define MSS_TIM7 (((MSS_TIM *)mss_tim) + 6)
 #define MSS_TIM8 (((MSS_TIM *)mss_tim) + 7)
 
-void tim_update_enable(MSS_TIM *tim, uint32_t psc, uint32_t arr, uint32_t priority, uint8_t start);
+void tim_update_config(MSS_TIM *tim, uint32_t psc, uint32_t arr, uint32_t priority, uint8_t start);
+void tim_enable(TIM_HandleTypeDef* htim);
+void tim_disable(TIM_HandleTypeDef* htim);
+void tim_set_arr(TIM_HandleTypeDef *htim, uint32_t arr);
 
 #endif

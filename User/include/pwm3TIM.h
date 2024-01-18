@@ -1,30 +1,30 @@
 /**
  ****************************************************************************************************
- * @file        gpio.h
- * @author      电气组
+ * @file        pwm3TIM.h
+ * @author      电气组,wangdexu
  * @version     V1.0
- * @date        2023-04-23
- * @brief       GPIO端口及针脚操作, 包括EXTI
+ * @date        2023-01-10
+ * @brief       pwm发波模块,3定时器实现版本
  * @license     Copyright (c) 2020-2032, 安徽中车瑞达电气有限公司
  ****************************************************************************************************
  * @attention
- *
- *
+ * 
  *
  ****************************************************************************************************
  */
-#ifndef __MSS_GPIO_H
-#define __MSS_GPIO_H
+#ifndef __MSS_PWM3TIM_H
+#define __MSS_PWM3TIM_H
 
 #include "stm32f1xx.h"
 
-void gpio_clk_enable(void);
-void gpio_init(GPIO_TypeDef *GPIOx, uint32_t pin, uint32_t mode, uint32_t pull);
-void exti_enable(IRQn_Type IRQn, uint32_t priority);
+#ifdef CF_PWM_USE_3TIM
+void pwm_config(void);
+void pwm_enable(void);
+void pwm_disable(void);
 
-void led0_config(void);
-void led0_on(void);
-void led0_off(void);
-void led0_toggle(void);
+void pwm_phaseA_IT_callback(void);
+void pwm_pullup_IT_callback(void);
+void pwm_pulldown_IT_callback(void);
+#endif
 
 #endif

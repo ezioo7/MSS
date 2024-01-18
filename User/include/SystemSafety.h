@@ -19,10 +19,17 @@
 
 #include "globalE.h"
 
-extern uint8_t  SV_Sequence_Detect_Flag;       /*标志是否需要进行相序检测*/
-extern uint32_t SV_UPWM_Count;                 /*单个周期内 U相上下桥导通计数，每个周期的初始为0*/
-extern uint32_t SV_VPWM_Count;                 /*单个周期内 V相上下桥导通计数，每个周期的初始为0*/
-extern uint32_t SV_WPWM_Count;                 /*单个周期内 W相上下桥导通计数，每个周期的初始为0*/
+extern uint8_t  SV_Sequence_Detect_Flag;           /*标志是否需要进行相序检测*/
+extern uint32_t SV_UPWM_Count;                     /*单个周期内 U相上下桥导通计数，每个周期的初始为0*/
+extern uint32_t SV_VPWM_Count;                     /*单个周期内 V相上下桥导通计数，每个周期的初始为0*/
+extern uint32_t SV_WPWM_Count;                     /*单个周期内 W相上下桥导通计数，每个周期的初始为0*/
+
+extern float SV_OVERPHI_L1Cnt;                     /*1.05倍额定电流，运行时间，单位，精度*/
+extern float SV_OVERPHI_L2Cnt;                     /*1.2倍额定电流，运行时间，单位，精度*/
+extern float SV_OVERPHI_L3Cnt;                     /*1.5倍额定电流，运行时间，单位，精度*/
+extern float SV_OVERPHI_L4Cnt;                     /*1.8倍额定电流，运行时间，单位，精度*/
+extern float SV_OVERPHI_L5Cnt;                     /*2倍额定电流，运行时间，单位，精度*/
+extern float SV_OVERPHI_L6Cnt;                     /*3倍额定电流，运行时间，单位，精度*/
 
 uint16_t CheckPhaseSequence(void);          /*相序错误监测*/
 

@@ -31,7 +31,7 @@ UART_HandleTypeDef g_uart5_handle = {0};
  * @param   itEnable: 是否使能串口中断, 0 = 屏蔽中断, 1 = 不屏蔽
  * @param   priority: USARTx_IRQn 的中断优先级
  */
-void uart_enable(USART_TypeDef *Instance, uint32_t baudrate, uint8_t itEnable, uint32_t priority)
+void uart_enable(USART_TypeDef *Instance, uint32_t baudrate, uint8_t it_Enable, uint32_t priority)
 {
     UART_HandleTypeDef *uart_handle;
     /* UART 初始化设置 */
@@ -40,9 +40,9 @@ void uart_enable(USART_TypeDef *Instance, uint32_t baudrate, uint8_t itEnable, u
         uart_handle = &g_uart1_handle;
         __HAL_RCC_USART1_CLK_ENABLE();
         /* PA9-TX PA10-RX */
-        gpio_config(GPIOA, GPIO_PIN_9, GPIO_MODE_AF_PP, GPIO_PULLUP);
-        gpio_config(GPIOA, GPIO_PIN_10, GPIO_MODE_AF_INPUT, GPIO_PULLUP);
-        if (itEnable)
+        gpio_init(GPIOA, GPIO_PIN_9, GPIO_MODE_AF_PP, GPIO_PULLUP);
+        gpio_init(GPIOA, GPIO_PIN_10, GPIO_MODE_AF_INPUT, GPIO_PULLUP);
+        if (it_Enable)
         {
             HAL_NVIC_SetPriority(USART1_IRQn, priority, 0);
             HAL_NVIC_EnableIRQ(USART1_IRQn);
@@ -53,9 +53,9 @@ void uart_enable(USART_TypeDef *Instance, uint32_t baudrate, uint8_t itEnable, u
         uart_handle = &g_uart2_handle;
         __HAL_RCC_USART2_CLK_ENABLE();
         /* PA2-TX, PA3_RX */
-        gpio_config(GPIOA, GPIO_PIN_2, GPIO_MODE_AF_PP, GPIO_PULLUP);
-        gpio_config(GPIOA, GPIO_PIN_3, GPIO_MODE_AF_INPUT, GPIO_PULLUP);
-        if (itEnable)
+        gpio_init(GPIOA, GPIO_PIN_2, GPIO_MODE_AF_PP, GPIO_PULLUP);
+        gpio_init(GPIOA, GPIO_PIN_3, GPIO_MODE_AF_INPUT, GPIO_PULLUP);
+        if (it_Enable)
         {
             HAL_NVIC_SetPriority(USART2_IRQn, priority, 0);
             HAL_NVIC_EnableIRQ(USART2_IRQn);
@@ -66,9 +66,9 @@ void uart_enable(USART_TypeDef *Instance, uint32_t baudrate, uint8_t itEnable, u
         uart_handle = &g_uart3_handle;
         __HAL_RCC_USART3_CLK_ENABLE();
         /* PC10-TX, PC11-RX */
-        gpio_config(GPIOC, GPIO_PIN_10, GPIO_MODE_AF_PP, GPIO_PULLUP);
-        gpio_config(GPIOC, GPIO_PIN_11, GPIO_MODE_AF_INPUT, GPIO_PULLUP);
-        if (itEnable)
+        gpio_init(GPIOC, GPIO_PIN_10, GPIO_MODE_AF_PP, GPIO_PULLUP);
+        gpio_init(GPIOC, GPIO_PIN_11, GPIO_MODE_AF_INPUT, GPIO_PULLUP);
+        if (it_Enable)
         {
             HAL_NVIC_SetPriority(USART3_IRQn, priority, 0);
             HAL_NVIC_EnableIRQ(USART3_IRQn);

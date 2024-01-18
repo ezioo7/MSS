@@ -28,33 +28,42 @@
 #include "mb.h"
 #include "mbport.h"
 
-
 /* ----------------------- static functions ---------------------------------*/
 
-
 /* ----------------------- Start implementation -----------------------------*/
+/**
+ * @brief   配置定时器, 该定时器每隔50us计数一次
+ * @param   usTim1Timerout50us: 溢出计数, 需要直接赋给ARR, 不要 - 1;
+ */
 BOOL xMBPortTimersInit(USHORT usTim1Timerout50us)
 {
     /**
-     * 定时器需要每隔50us计数一次, 即时钟频率 20KHz, 计算得分频系数3600
+     * 定时器需要每隔50us计数一次, 即时钟频率 20KHz, 计算得分频系数3600;
+     * 由于tim_update_config内部自动对传入的 arr 进行 -1 , 所以这里传入 usTim1Timerout50us + 1 
      */
-    tim_update_enable(CF_TIM_MB, 3599, usTim1Timerout50us - 1, 10, FALSE);
+    tim_update_config(CF_TIM_MB, 3600, usTim1Timerout50us + 1, 10, FALSE);
     return TRUE;
 }
 
+/**
+ * @brief   使能定时器;
+*/
 inline void
 vMBPortTimersEnable()
 {
+
     /* Enable the timer with the timeout passed to xMBPortTimersInit( ) */
-    __HAL_TIM_SET_COUNTER(&CF_TIM_MB_HANDLE, 0);
-    __HAL_TIM_ENABLE(&CF_TIM_MB_HANDLE);
+    tim_enable(&CF_TIM_MB_HANDLE);
 }
 
+/**
+ * @brief   失能定时器;
+*/
 inline void
 vMBPortTimersDisable()
 {
     /* Disable any pending timers. */
-    __HAL_TIM_DISABLE(&CF_TIM_MB_HANDLE);
+    tim_disable(&CF_TIM_MB_HANDLE);
 }
 
 /* Create an ISR which is called whenever the timer has expired. This function
@@ -63,7 +72,8 @@ vMBPortTimersDisable()
  */
 void prvvTIMERExpiredISR(void)
 {
+    /**
+     * 当定时器发生更新中断时, 说明自收到上个字符后已经过去 t35, 调用回调函数;
+    */
     (void)pxMBPortCBTimerExpired();
 }
-
-

@@ -898,16 +898,17 @@ HAL_StatusTypeDef HAL_SPI_Transmit(SPI_HandleTypeDef *hspi, uint8_t *pData, uint
     }
     while (hspi->TxXferCount > 0U)
     {
-      /* Wait until TXE flag is set to send data */
+      /* 查询上个字节是否已经由DR转移到移位发送寄存器 */
       if (__HAL_SPI_GET_FLAG(hspi, SPI_FLAG_TXE))
       {
+        /* 如果是, 则将新的字节放入DR中, 等待自动转移到移位寄存器 */
         *((__IO uint8_t *)&hspi->Instance->DR) = (*hspi->pTxBuffPtr);
         hspi->pTxBuffPtr += sizeof(uint8_t);
         hspi->TxXferCount--;
       }
       else
       {
-        /* Timeout management */
+        /* 如果上个字节还没有转移, 判断是否超时 */
         if ((((HAL_GetTick() - tickstart) >=  Timeout) && (Timeout != HAL_MAX_DELAY)) || (Timeout == 0U))
         {
           errorcode = HAL_TIMEOUT;
@@ -1554,7 +1555,7 @@ HAL_StatusTypeDef HAL_SPI_Receive_IT(SPI_HandleTypeDef *hspi, uint8_t *pData, ui
   }
 #endif /* USE_SPI_CRC */
 
-  /* Enable TXE and ERR interrupt */
+  /* Enable RXNE and ERR interrupt */
   __HAL_SPI_ENABLE_IT(hspi, (SPI_IT_RXNE | SPI_IT_ERR));
 
   /* Note : The SPI must be enabled after unlocking current process

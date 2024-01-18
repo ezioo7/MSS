@@ -13,8 +13,8 @@
  *
  ****************************************************************************************************
  */
-#ifndef __MSS_GLOBALTASK_H
-#define __MSS_GLOBALTASK_H
+#ifndef __MSS_TaskConfig_H
+#define __MSS_TaskConfig_H
 
 #include "FreeRTOS.h"
 #include "task.h"

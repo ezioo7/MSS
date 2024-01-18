@@ -76,6 +76,13 @@ static volatile USHORT usSndBufferCount;
 static volatile USHORT usRcvBufferPos;
 
 /* ----------------------- Start implementation -----------------------------*/
+/**
+ * @brief   初始化FreeModbus-RTU
+ * @param   ucSlaveAddress: 本机作为从机的地址;
+ * @param   ucPort: 用于选择串口, 实际没有用到, 而是采用 CF_USART_MB 来配置; 给 0 即可;
+ * @param   ulBaudRate: 串口波特率, 建议不要超过 19200; 因为超过后帧间隔就固定为 1750us;
+ * @param   eParity: 校验方式, 给 MB_PAR_NONE 无校验即可;
+*/
 eMBErrorCode
 eMBRTUInit(UCHAR ucSlaveAddress, UCHAR ucPort, ULONG ulBaudRate, eMBParity eParity)
 {
@@ -210,10 +217,6 @@ eMBRTUSend(UCHAR ucSlaveAddress, const UCHAR *pucFrame, USHORT usLength)
         eSndState = STATE_TX_XMIT;
 
         vMBPortSerialEnable(FALSE, TRUE);
-
-        /* xMBPortSerialPutByte((CHAR)*pucSndBufferCur);
-        pucSndBufferCur++;
-        usSndBufferCount--; */
     }
     else
     {

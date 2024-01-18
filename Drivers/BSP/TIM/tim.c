@@ -8,8 +8,10 @@
  * @license     Copyright (c) 2020-2032, 安徽中车瑞达电气有限公司
  ****************************************************************************************************
  * @attention
- *
- *
+ * 已经被使用的TIM:
+ * #define CF_DATA_TRANS_TIM MSS_TIM2
+ * #define CF_TIM_PWM MSS_TIM6
+ * #define CF_TIM_MB MSS_TIM7
  ****************************************************************************************************
  */
 #include "globalE.h"
@@ -42,16 +44,15 @@ MSS_TIM mss_tim[8] =
  * @param   psc: 预分频系数, 可取 0 ~ 65535, 最终得到的计数器计数频率为 72M/(psc+1);
  *  @arg    71, 每 1us 计数一次;
  *  @arg    7199, 每 0.1ms 计数一次;
- * @param   arr: 可取 0 ~ 65535, 在向上计数和向下计数时, 计数 arr+1 次溢出;
+ * @param   arr: 可取 1 ~ 65536, 计数 arr 次溢出;
  * @param   priority: 更新中断的优先级, 使用RTOS管理时可取 5 ~ 15, 数字越小优先级越高;
  * @param   start: 是否立即开始计数, FALSE = 否, TRUE = 是;
  */
-void tim_update_enable(MSS_TIM *tim, uint32_t psc, uint32_t arr, uint32_t priority, uint8_t start)
+void tim_update_config(MSS_TIM *tim, uint32_t psc, uint32_t arr, uint32_t priority, uint8_t start)
 {
-
     tim->handle->Instance = tim->Instance;
-    tim->handle->Init.Prescaler = psc;
-    tim->handle->Init.Period = arr;
+    tim->handle->Init.Prescaler = psc - 1;                                /* 寄存器中要配置的值为逻辑值 -1 */
+    tim->handle->Init.Period = arr - 1;                                   /* 寄存器中要配置的值为逻辑值 -1 */
     tim->handle->Init.CounterMode = TIM_COUNTERMODE_UP;                   /* 默认向上计数 */
     tim->handle->Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE; /* 默认关闭预装载功能, 修改ARR立即生效 */
 
@@ -86,4 +87,37 @@ void tim_update_enable(MSS_TIM *tim, uint32_t psc, uint32_t arr, uint32_t priori
         __HAL_TIM_SET_COUNTER(tim->handle, 0); /* 清0计数器 */
         __HAL_TIM_ENABLE(tim->handle);         /* 开始计数 */
     }
+}
+
+/**
+ * @brief   使能指定TIM的COUNT,使其复位并开始计数;
+ * @param   htim:TIM钩子指针;
+ */
+void tim_enable(TIM_HandleTypeDef *htim)
+{
+    __HAL_TIM_SET_COUNTER(htim, 0); /* 清 0 TIM的count */
+    __HAL_TIM_ENABLE(htim);         /* 开始计数 */
+}
+
+/**
+ * @brief   失能指定TIM的COUNT,使其停止计数;
+ * @param   htim:TIM钩子指针;
+ */
+void tim_disable(TIM_HandleTypeDef *htim)
+{
+    __HAL_TIM_DISABLE(htim); /* 失能TIM */
+}
+
+/**
+ * @brief   设置指定TIM的ARR值;
+ * @param   htim:TIM钩子指针;
+ */
+void tim_set_arr(TIM_HandleTypeDef *htim, uint32_t arr)
+{
+    /* TODO: 检查参数有效性 */
+    if (arr > 0xFFFF)
+    {
+        /* code */
+    }
+    (htim->Instance)->ARR = arr - 1;
 }

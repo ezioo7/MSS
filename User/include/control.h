@@ -11,6 +11,10 @@
  * @attention
  *
  */
+#ifndef __MSS_Control_H
+#define __MSS_Control_H
 
 void control_input_init(void);
 void control_output_init(void);
+
+#endif

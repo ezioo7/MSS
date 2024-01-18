@@ -28,10 +28,10 @@
 void control_input_init(void)
 {
     /* PB7 PE1 PE2 PE3  继电器输入数字信号 */
-    gpio_config(GPIOB, GPIO_PIN_7, GPIO_MODE_INPUT, GPIO_PULLDOWN);
-    gpio_config(GPIOE, GPIO_PIN_1, GPIO_MODE_INPUT, GPIO_PULLDOWN);
-    gpio_config(GPIOE, GPIO_PIN_2, GPIO_MODE_INPUT, GPIO_PULLDOWN);
-    gpio_config(GPIOE, GPIO_PIN_3, GPIO_MODE_INPUT, GPIO_PULLDOWN);
+    gpio_init(GPIOB, GPIO_PIN_7, GPIO_MODE_INPUT, GPIO_PULLDOWN);
+    gpio_init(GPIOE, GPIO_PIN_1, GPIO_MODE_INPUT, GPIO_PULLDOWN);
+    gpio_init(GPIOE, GPIO_PIN_2, GPIO_MODE_INPUT, GPIO_PULLDOWN);
+    gpio_init(GPIOE, GPIO_PIN_3, GPIO_MODE_INPUT, GPIO_PULLDOWN);
 }
 
 /**
@@ -39,15 +39,17 @@ void control_input_init(void)
  */
 void control_output_init(void)
 {
+    /* TODO: 根据实际情况确定要用拉低还是拉高 */
     /* PE9, 输出, 控制柜体风机启停 */
-    gpio_config(GPIOE, GPIO_PIN_9, GPIO_MODE_OUTPUT_PP, GPIO_PULLDOWN);
+    gpio_init(GPIOE, GPIO_PIN_9, GPIO_MODE_OUTPUT_PP, GPIO_PULLDOWN);
     /* PE0 PB8 PB9  扩展卡继电器输出 */
-    gpio_config(GPIOE, GPIO_PIN_0, GPIO_MODE_OUTPUT_PP, GPIO_PULLDOWN);
-    gpio_config(GPIOB, GPIO_PIN_8, GPIO_MODE_OUTPUT_PP, GPIO_PULLDOWN);
-    gpio_config(GPIOB, GPIO_PIN_9, GPIO_MODE_OUTPUT_PP, GPIO_PULLDOWN);
+    gpio_init(GPIOE, GPIO_PIN_0, GPIO_MODE_OUTPUT_PP, GPIO_PULLDOWN);
+    gpio_init(GPIOB, GPIO_PIN_8, GPIO_MODE_OUTPUT_PP, GPIO_PULLDOWN);
+    gpio_init(GPIOB, GPIO_PIN_9, GPIO_MODE_OUTPUT_PP, GPIO_PULLDOWN);
     /* PE4 PE5 PE6  X4继电器输出 */
-    gpio_config(GPIOE, GPIO_PIN_4, GPIO_MODE_OUTPUT_PP, GPIO_PULLDOWN);
-    gpio_config(GPIOE, GPIO_PIN_5, GPIO_MODE_OUTPUT_PP, GPIO_PULLDOWN);
+    gpio_init(GPIOE, GPIO_PIN_4, GPIO_MODE_OUTPUT_PP, GPIO_PULLDOWN);
+    /* FIXME: 先给高电平, 防止LED0亮 */
+    gpio_init(GPIOE, GPIO_PIN_5, GPIO_MODE_OUTPUT_PP, GPIO_PULLUP);
     /* FIXME: 先给高电平, 防止LED1亮 */
-    gpio_config(GPIOE, GPIO_PIN_6, GPIO_MODE_OUTPUT_PP, GPIO_PULLUP);
+    gpio_init(GPIOE, GPIO_PIN_6, GPIO_MODE_OUTPUT_PP, GPIO_PULLUP);
 }

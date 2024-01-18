@@ -1,30 +1,25 @@
 /**
  ****************************************************************************************************
- * @file        gpio.h
- * @author      电气组
+ * @file        spi.h
+ * @author      电气组,wangdexu
  * @version     V1.0
- * @date        2023-04-23
- * @brief       GPIO端口及针脚操作, 包括EXTI
+ * @date        2023-01-06
+ * @brief       SPI驱动
  * @license     Copyright (c) 2020-2032, 安徽中车瑞达电气有限公司
  ****************************************************************************************************
  * @attention
  *
  *
- *
  ****************************************************************************************************
  */
-#ifndef __MSS_GPIO_H
-#define __MSS_GPIO_H
+#ifndef __MSS_SPI_H
+#define __MSS_SPI_H
 
 #include "stm32f1xx.h"
 
-void gpio_clk_enable(void);
-void gpio_init(GPIO_TypeDef *GPIOx, uint32_t pin, uint32_t mode, uint32_t pull);
-void exti_enable(IRQn_Type IRQn, uint32_t priority);
+extern SPI_HandleTypeDef g_spi1_handle;
+extern SPI_HandleTypeDef g_spi3_handle;
 
-void led0_config(void);
-void led0_on(void);
-void led0_off(void);
-void led0_toggle(void);
+void spi1_init(uint32_t baud_Rate_Prescaler);
 
 #endif
